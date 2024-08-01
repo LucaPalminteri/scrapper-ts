@@ -96,19 +96,22 @@ var type = function (page, selector, text) { return __awaiter(void 0, void 0, vo
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 3, , 4]);
                 console.clear();
                 console.log("-> Typing...");
-                return [4 /*yield*/, page.type(selector, text)];
+                return [4 /*yield*/, page.waitForSelector(selector, { state: "visible", timeout: 5000 })];
             case 1:
                 _a.sent();
-                console.log("\t✓ Done!");
-                return [3 /*break*/, 3];
+                return [4 /*yield*/, page.fill(selector, text)];
             case 2:
+                _a.sent();
+                console.log("\t✓ Done!");
+                return [3 /*break*/, 4];
+            case 3:
                 error_3 = _a.sent();
                 console.error("Error:", error_3);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
@@ -136,8 +139,11 @@ var getPagination = function (page, selectorPagination) { return __awaiter(void 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.clear();
+                //console.clear();
                 console.log("-> Calculating the pages to retrieve information...");
+                return [4 /*yield*/, page.waitForSelector(selectorPagination, { state: "visible" })];
+            case 1:
+                _a.sent();
                 return [4 /*yield*/, page.evaluate(function (selectorPagination) {
                         var links = document.querySelectorAll(selectorPagination);
                         if (links.length === 0)
@@ -145,7 +151,9 @@ var getPagination = function (page, selectorPagination) { return __awaiter(void 
                         else
                             return Array.from(links).map(function (link) { return link.href; });
                     }, selectorPagination)];
-            case 1: return [2 /*return*/, _a.sent()];
+            case 2: 
+            // const frame = page.mainFrame();
+            return [2 /*return*/, _a.sent()];
         }
     });
 }); };

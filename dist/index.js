@@ -40,26 +40,35 @@ var playwright_1 = require("playwright");
 var functions_coto_1 = require("./functions/functions.coto");
 var BASE_URL_COTO = "https://www.cotodigital3.com.ar/sitios/cdigi/";
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var browser, page, cotoProducts;
+    var browser, page, cotoProducts, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, playwright_1.chromium.launch()];
+            case 0: return [4 /*yield*/, playwright_1.chromium.launch({ headless: false })];
             case 1:
                 browser = _a.sent();
                 return [4 /*yield*/, browser.newPage()];
             case 2:
                 page = _a.sent();
-                return [4 /*yield*/, page.goto(BASE_URL_COTO)];
+                _a.label = 3;
             case 3:
+                _a.trys.push([3, 6, 7, 9]);
+                return [4 /*yield*/, page.goto(BASE_URL_COTO)];
+            case 4:
                 _a.sent();
                 return [4 /*yield*/, (0, functions_coto_1.getProducsCoto)(page, BASE_URL_COTO, "leche")];
-            case 4:
-                cotoProducts = _a.sent();
-                console.log("Products:", cotoProducts);
-                return [4 /*yield*/, browser.close()];
             case 5:
+                cotoProducts = _a.sent();
+                console.log("Total products found: ".concat(cotoProducts.length));
+                return [3 /*break*/, 9];
+            case 6:
+                error_1 = _a.sent();
+                console.error("An error occurred:", error_1);
+                return [3 /*break*/, 9];
+            case 7: return [4 /*yield*/, browser.close()];
+            case 8:
                 _a.sent();
-                return [2 /*return*/];
+                return [7 /*endfinally*/];
+            case 9: return [2 /*return*/];
         }
     });
 }); })();
