@@ -1,17 +1,29 @@
 import { Page } from "@playwright/test";
 
+/**
+ * Navigates to a specified URL using Puppeteer.
+ *
+ * @param page - The Puppeteer page object.
+ * @param url - The URL to navigate to.
+ * @returns A Promise that resolves when the navigation is complete.
+ */
 export const goTo = async (page: Page, url: string): Promise<void> => {
   try {
     console.clear();
     console.log("-> Going to Coto Digital...");
     await page.goto(url);
     console.log("\t✓ Done!");
-    // await page.screenshot({path: 'screenshot.png'});
   } catch (error) {
     console.error("Error:", error);
   }
 };
 
+/**
+ * Presses the Enter key on the keyboard.
+ *
+ * @param page - The Playwright page object.
+ * @returns A Promise that resolves when the Enter key has been pressed.
+ */
 export const pressEnter = async (page: Page): Promise<void> => {
   try {
     console.clear();
@@ -23,17 +35,14 @@ export const pressEnter = async (page: Page): Promise<void> => {
   }
 };
 
-// export const waitForNavigation = async (page: Page): Promise<void> => {
-//   try {
-//     console.clear();
-//     console.log("-> Waiting for the search results...");
-//     await page.waitForNavigation({ waitUntil: "networkidle0" });
-//     console.log("\t✓ Done!");
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// };
-
+/**
+ * Types text into an input field on a web page.
+ *
+ * @param page - The Puppeteer page object.
+ * @param selector - The CSS selector of the input field.
+ * @param text - The text to type into the input field.
+ * @returns A Promise that resolves when the text has been typed.
+ */
 export const type = async (page: Page, selector: string, text: string): Promise<void> => {
   try {
     console.clear();
@@ -46,24 +55,17 @@ export const type = async (page: Page, selector: string, text: string): Promise<
   }
 };
 
+/**
+ * Loads a web page, types text into an input field, and presses Enter.
+ *
+ * @param page - The Puppeteer page object.
+ * @param url - The URL of the web page to load.
+ * @param inputSelector - The CSS selector of the input field.
+ * @param search - The text to type into the input field.
+ * @returns A Promise that resolves when the page has been loaded, text has been typed, and Enter has been pressed.
+ */
 export const loadAndSearch = async (page: Page, url: string, inputSelector: string, search: string): Promise<void> => {
   await goTo(page, url);
-  // await setViewport(page, 1080, 1920);
   await type(page, inputSelector, search);
   await pressEnter(page);
-  //await waitForNavigation(page);
-  //console.clear();
-};
-
-export const getPagination = async (page: Page, selectorPagination: string): Promise<any[]> => {
-  //console.clear();
-  console.log("-> Calculating the pages to retrieve information...");
-  await page.waitForSelector(selectorPagination, { state: "visible" });
-
-  // const frame = page.mainFrame();
-  return await page.evaluate((selectorPagination) => {
-    const links: NodeListOf<Element> = document.querySelectorAll(selectorPagination);
-    if (links.length === 0) return [];
-    else return Array.from(links).map((link) => (link as HTMLAnchorElement).href);
-  }, selectorPagination);
 };
