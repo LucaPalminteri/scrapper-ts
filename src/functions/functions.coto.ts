@@ -1,6 +1,6 @@
 import { loadAndSearch } from "./functions";
 import { SEARCH_INPUT, PAGINATION_SELECTOR, PRODUCTS_SELECTOR, SELECTORS } from "../config/config.coto";
-import { Product } from "../types/types.js";
+import { Product } from "../interfaces/Product.js";
 import { Page } from "@playwright/test";
 
 console.log("SEARCH_INPUT:", SEARCH_INPUT);
